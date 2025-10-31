@@ -1,0 +1,22 @@
+[project]
+name = "agno-os-basketball-ai"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "agno>=2.1.4",
+    "anthropic>=0.69.0",
+    "basketintelligence",
+    "bson>=0.5.10",
+    "dotenv>=0.9.9",
+    "fastapi[standard]>=0.119.0",
+    "mcp>=1.17.0",
+    "mlflow>=3.5.0",
+    "openai>=2.5.0",
+    "pymongo[srv]>=4.15.3",
+    "tabulate>=0.9.0",
+]
+
+[tool.uv.sources]
+basketintelligence = { url = "https://github.com/zhenxiay/BasketIntelligence/releases/download/v1.0.2/BasketIntelligence-1.0.2-py3-none-any.whl" }
