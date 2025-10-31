@@ -42,9 +42,8 @@ data_agent = create_data_agent()
 # Create a team
 research_team = create_team(
     member_list=[
-                synapse_agent,
-                oracle_agent,
-                docupedia_agent,
+                data_agent,
+                analyst_agent,
                 ]
     )
 
@@ -53,20 +52,11 @@ os.environ["NO_PROXY"] = "localhost, 127.0.0.1"
 os.environ["no_proxy"] = "localhost, 127.0.0.1"
 
 # Create the AgentOS
-agent_os = AgentOS(
-                    #agents=agent_list,
-                    agents=[
-                        ms_sql_agent,
-                        synapse_agent,
-                        oracle_agent,
-                        thor_faq_agent,
-                        docupedia_agent,
-                        basketball_agent,
-                        ],
-                    teams=[research_team],
+agent_os = AgentOS(                    
+    teams=[research_team],
                     )
 # Get the FastAPI app for the AgentOS
 app = agent_os.get_app()
 
 if __name__ == "__main__":
-    agent_os.serve(app="main:app", port=8010)
+    agent_os.serve(app="main:app", port=7777)
