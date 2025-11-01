@@ -9,6 +9,7 @@ dependencies = [
     "anthropic>=0.69.0",
     "basketintelligence",
     "bson>=0.5.10",
+    "chonkie[openai]>=1.4.0",
     "dotenv>=0.9.9",
     "fastapi[standard]>=0.119.0",
     "mcp>=1.17.0",

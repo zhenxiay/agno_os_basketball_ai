@@ -6,11 +6,17 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
 from agno.agent import Agent
 from agno.knowledge.knowledge import Knowledge
+from agno.knowledge.reader.website_reader import WebsiteReader
 from agno.vectordb.qdrant import Qdrant
 
-from utils.config import get_llm_config
+from utils.config import get_llm_config, sqlite_db
 
 COLLECTION_NAME = "thai-recipes"
+
+# Initialize Sqlite for knowledge contents
+contents_db = sqlite_db(
+                        db_path="knowledge_base.db"
+                        )
 
 # Initialize Qdrant with local instance
 vector_db = Qdrant(
@@ -21,6 +27,7 @@ vector_db = Qdrant(
 # Create knowledge base
 knowledge_base = Knowledge(
     vector_db=vector_db,
+    contents_db=contents_db,
 )
 
 agent = Agent(
@@ -31,8 +38,10 @@ agent = Agent(
 if __name__ == "__main__":
     # Load knowledge base asynchronously
     asyncio.run(knowledge_base.add_content_async(
-            url="https://agno-public.s3.amazonaws.com/recipes/ThaiRecipes.pdf"
+            url="https://www.nba.com/stats/help/glossary",
+            reader=WebsiteReader(max_depth=2, max_links=20),
+            skip_if_exists=True
         )
     )
 
-    asyncio.run(agent.aprint_response("How to make Tom Kha Gai", markdown=True))
+    asyncio.run(agent.aprint_response("What does the advanced stats %3PA mean?", markdown=True))

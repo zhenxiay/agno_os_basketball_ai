@@ -20,6 +20,9 @@ MLFLOW_TRACK_SERVER = os.getenv("MLFLOW_TRACK_SERVER", "local")  # Default to lo
 MLFLOW_EXPERIMENT_NAME = os.getenv("MLFLOW_EXPERIMENT_NAME", "MCP_Experiments")  # Default experiment name
 DATABRICKS_HOST = os.getenv("DATABRICKS_HOST", "local")
 
+# Qdrant URL configuration for vector database as Knowledge Base
+Qdrant_URL = os.getenv("Qdrant_URL", "http://localhost:6333")
+
 # Define function for LLM configuration
 def get_llm_config(provider: str):
     """
@@ -32,7 +35,7 @@ def get_llm_config(provider: str):
         An instance of the corresponding LLM model.
     """
     llm = Claude("claude-sonnet-4-5") if provider == "claude" \
-          else OpenAIResponses(id="gpt-5-mini") if provider == "OpenAI" \
+          else OpenAIResponses(id="gpt-4.1-mini") if provider == "OpenAI" \
           else AzureOpenAI(id="gpt-4.1", api_version="2024-12-01-preview")
 
     return llm
