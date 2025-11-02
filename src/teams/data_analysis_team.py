@@ -33,6 +33,8 @@ def create_team(member_list: list, llm: str) -> Team:
             get_team_instructions(),
         ],
         db=sqlite_db(),
+        share_member_interactions=True,
+        add_team_history_to_members=True,
         enable_user_memories=True,
         add_history_to_context=True,
         add_datetime_to_context=True,
