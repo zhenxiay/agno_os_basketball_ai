@@ -24,19 +24,20 @@ DATABRICKS_HOST = os.getenv("DATABRICKS_HOST", "local")
 Qdrant_URL = os.getenv("Qdrant_URL", "http://localhost:6333")
 
 # Define function for LLM configuration
-def get_llm_config(provider: str):
+def get_llm_config(provider: str, model_id: str):
     """
     Get the LLM configuration based on the provider.
 
     Args:
-        provider: The LLM provider ("claude" or "AzureOpenAI")
+        provider: The LLM provider ("claude", "OpenAI" or "AzureOpenAI")
+        model_id: The model ID to use for the LLM. Options: "claude-sonnet-4-5", "gpt-4.1-mini", "gpt-4.1".
 
     Returns:
         An instance of the corresponding LLM model.
     """
-    llm = Claude("claude-sonnet-4-5") if provider == "claude" \
-          else OpenAIResponses(id="gpt-4.1-mini") if provider == "OpenAI" \
-          else AzureOpenAI(id="gpt-4.1", api_version="2024-12-01-preview")
+    llm = Claude(model_id) if provider == "claude" \
+          else OpenAIResponses(id=model_id) if provider == "OpenAI" \
+          else AzureOpenAI(id=model_id, api_version="2024-12-01-preview")
 
     return llm
 

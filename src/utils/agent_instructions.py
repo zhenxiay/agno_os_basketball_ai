@@ -18,7 +18,7 @@ def get_analyst_agent_instructions() -> str:
         2. Providing clear and concise analysis that directly addresses the user's questions,
 
         Be thorough but concise. 
-        If no relevant information can be found with the defined agent tools, respond with "No relevant information found."
+        If no relevant information can be found, ask data agent for more data.
         """
 
 def get_data_agent_instructions() -> str:

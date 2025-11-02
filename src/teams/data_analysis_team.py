@@ -18,6 +18,7 @@ def create_team(member_list: list, llm: str) -> Team:
     Args:
         member_list: List of Agent instances to be members of the team.
         llm: The LLM model to use for the team ("claude", "OpenAI" or "AzureOpenAI")
+        model_id: The model ID to use for the LLM. Options: "claude-sonnet-4-5", "gpt-4.1-mini", "gpt-4.1"
 
     Returns:
         An instance of Team configured as a data analysis team.
@@ -26,7 +27,8 @@ def create_team(member_list: list, llm: str) -> Team:
         name="Data Analysis Team",
         description="A team of agents that collaborates to analyze basketball data.",
         members=member_list,
-        model=get_llm_config(llm),
+        model=get_llm_config(llm,"gpt-4.1"),
+        reasoning_model=get_llm_config(llm, "gpt-4.1-mini"),
         id="data_analysis_team",
         tools=[ReasoningTools(add_instructions=True)],
         instructions=[

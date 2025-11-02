@@ -22,12 +22,14 @@ def create_agent(llm: str) -> Agent:
 
     Args:
         llm: The LLM model to use for the team ("claude", "OpenAI" or "AzureOpenAI")
+        model_id: The model ID to use for the LLM. Options: "claude-sonnet-4-5", "gpt-4.1-mini", "gpt-4.1"
+        knowledge_base: The knowledge base to be used by the agent
     '''
 
     agent = Agent(
         name="Basketball Visualization Agent",
-        model=get_llm_config(llm),
-        reasoning_model=get_llm_config(llm),
+        model=get_llm_config(llm,"gpt-4.1"),
+        reasoning_model=get_llm_config(llm, "gpt-4.1-mini"),
         db=sqlite_db(),
         tools=[
             VisualizationTools("visuals"),
