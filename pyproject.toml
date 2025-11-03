@@ -12,6 +12,7 @@ dependencies = [
     "chonkie[openai]>=1.4.0",
     "dotenv>=0.9.9",
     "fastapi[standard]>=0.119.0",
+    "fastmcp>=2.13.0.2",
     "mcp>=1.17.0",
     "mlflow>=3.5.0",
     "openai>=2.5.0",

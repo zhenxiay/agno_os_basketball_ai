@@ -6,7 +6,6 @@ from agno.team import Team
 from agno.os import AgentOS
 from agno.knowledge.reader.website_reader import WebsiteReader
 
-from dotenv import load_dotenv
 import os
 from agents.data_agent import create_agent as create_data_agent
 from agents.analyst_agent import create_agent as create_analyst_agent
@@ -14,7 +13,15 @@ from agents.visual_agent import create_agent as create_visual_agent
 from teams.data_analysis_team import create_team as create_data_analysis_team
 
 from utils.knowledge_base import create_knowledge_base
-from utils.config import llm, llm_reasoning
+from utils.mlflow_tracer import setup_mlflow_tracer
+from utils.config import (
+    llm, 
+    llm_reasoning, 
+    MLFLOW_TRACING,
+    MLFLOW_TRACK_SERVER,
+    MLFLOW_EXPERIMENT_NAME,
+    DATABRICKS_HOST,
+)
 from utils.logger import get_logger
 
 # Get logger
@@ -27,9 +34,16 @@ os.environ["no_proxy"] = "localhost, 127.0.0.1"
 # crate knowledge base
 knowledge_base = create_knowledge_base(COLLECTION_NAME="basketball_knowledge")
 
-# Show LLM provider selection from utils.config
-# logger.info('llm selected: ', llm)
-# logger.info('llm selected for reasoning: ', llm_reasoning)
+# Set up mlflow tracer
+if MLFLOW_TRACING == 'true':
+    setup_mlflow_tracer(
+        track_server=MLFLOW_TRACK_SERVER,
+        experiment_name=MLFLOW_EXPERIMENT_NAME
+                        )
+    if MLFLOW_TRACK_SERVER == "databricks":
+        logger.info(f"Initialized mlflow trace to Databricks: {DATABRICKS_HOST}")
+    else:
+        logger.info("Initialized mlflow trace to http://localhost:5000")
 
 # Create agents
 data_agent = create_data_agent(
@@ -58,6 +72,7 @@ analysis_team = create_data_analysis_team(
 # Create the AgentOS
 agent_os = AgentOS(                    
     teams=[analysis_team],
+    enable_mcp_server=True,
                     )
 # Get the FastAPI app for the AgentOS
 app = agent_os.get_app()

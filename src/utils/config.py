@@ -25,9 +25,9 @@ Qdrant_URL = os.getenv("Qdrant_URL", "http://localhost:6333")
 
 # Define a catalog of available LLM providers and models
 llm_catalog = {"claude": "claude-sonnet-4-5",
-               "claude-mini": "claude-sonnet-3-5",
+               "claude-mini": "claude-3-5-sonnet-20240620",
                "OpenAI": "gpt-4.1",
-               "OpenAI-mini": "gpt-4.1-mini",
+               "OpenAI-mini": "o4-mini",
                "AzureOpenAI": "gpt-4.1"}
 
 # Load env variables for llm settings

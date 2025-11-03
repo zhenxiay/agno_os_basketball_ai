@@ -42,7 +42,7 @@ def create_team(
                     ),
         reasoning_model=get_llm_config(
                     provider=llm_reasoning,
-                    model_id=llm_catalog.get(llm_reasoning, llm)
+                    model_id=llm_catalog.get(llm_reasoning, llm),
                     ),
         id="data_analysis_team",
         tools=[ReasoningTools(add_instructions=True)],

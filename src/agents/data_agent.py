@@ -28,7 +28,11 @@ from utils.config import (
 # Initialize logger
 logger = get_logger()
 
-@tool(stop_after_tool_call=False)
+@tool(
+    name="get_team_shooting_clustering",
+    description="Get the team clustering data with shooting stats for a given season",
+    stop_after_tool_call=False
+    )
 def get_team_shooting_clustering(
         season: str, 
         n_cluster: Optional[int]= 5
@@ -41,16 +45,20 @@ def get_team_shooting_clustering(
 
     return df_output
 
-@tool(stop_after_tool_call=False)                                 
+@tool(
+    name="get_player_adv_stats_clustering",
+    description="Get the player clustering data with advanced stats for a given season",
+    stop_after_tool_call=False
+    )                                 
 def get_player_clustering(
         season: str, 
         n_cluster: Optional[int]= 5
         ):
-    """Get the palyer clustering data for a given season."""
+    """Get the player clustering data with advanced stats for a given season."""
     
     df_adv_stats = CreateSeason(season).read_adv_stats()
     df_clustering = k_means_player_clustering(season, n_cluster)
-    df_output = df_adv_stats.join(df_clustering.set_index('Player'), on='Player')
+    df_output = df_adv_stats.merge(df_clustering, on='Player', how='inner')
 
     return df_output
 
@@ -73,11 +81,12 @@ def create_agent(llm: str, llm_reasoning: Optional[str]) -> Agent:
                     ),
         reasoning_model=get_llm_config(
                     provider=llm_reasoning,
-                    model_id=llm_catalog.get(llm_reasoning, llm)
+                    model_id=llm_catalog.get(llm_reasoning, llm),
                     ),
         db=sqlite_db(),
         tools=[
             get_team_shooting_clustering,
+            get_player_clustering,
             ReasoningTools(add_instructions=True),
             ],
         instructions=get_data_agent_instructions(),

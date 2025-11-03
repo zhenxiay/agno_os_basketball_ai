@@ -42,7 +42,7 @@ def create_agent(
                     ),
         reasoning_model=get_llm_config(
                     provider=llm_reasoning,
-                    model_id=llm_catalog.get(llm_reasoning, llm)
+                    model_id=llm_catalog.get(llm_reasoning, llm),
                     ),
         db=sqlite_db(),
         tools=[
