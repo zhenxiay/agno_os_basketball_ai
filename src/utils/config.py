@@ -23,6 +23,17 @@ DATABRICKS_HOST = os.getenv("DATABRICKS_HOST", "local")
 # Qdrant URL configuration for vector database as Knowledge Base
 Qdrant_URL = os.getenv("Qdrant_URL", "http://localhost:6333")
 
+# Define a catalog of available LLM providers and models
+llm_catalog = {"claude": "claude-sonnet-4-5",
+               "claude-mini": "claude-sonnet-3-5",
+               "OpenAI": "gpt-4.1",
+               "OpenAI-mini": "gpt-4.1-mini",
+               "AzureOpenAI": "gpt-4.1"}
+
+# Load env variables for llm settings
+llm = os.getenv("llm", "OpenAI")
+llm_reasoning = os.getenv("llm_reasoning", "OpenAI")
+
 # Define function for LLM configuration
 def get_llm_config(provider: str, model_id: str):
     """
@@ -35,8 +46,8 @@ def get_llm_config(provider: str, model_id: str):
     Returns:
         An instance of the corresponding LLM model.
     """
-    llm = Claude(model_id) if provider == "claude" \
-          else OpenAIResponses(id=model_id) if provider == "OpenAI" \
+    llm = Claude(model_id) if provider.startswith("claude")\
+          else OpenAIResponses(id=model_id) if provider.startswith("OpenAI")\
           else AzureOpenAI(id=model_id, api_version="2024-12-01-preview")
 
     return llm

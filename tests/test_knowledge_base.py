@@ -9,37 +9,31 @@ from agno.knowledge.knowledge import Knowledge
 from agno.knowledge.reader.website_reader import WebsiteReader
 from agno.vectordb.qdrant import Qdrant
 
-from utils.config import get_llm_config, sqlite_db
-
-COLLECTION_NAME = "thai-recipes"
-
-# Initialize Sqlite for knowledge contents
-contents_db = sqlite_db(
-                        db_path="knowledge_base.db"
-                        )
-
-# Initialize Qdrant with local instance
-vector_db = Qdrant(
-    collection=COLLECTION_NAME, 
-    url="http://localhost:6666"
+from utils.config import (
+    get_llm_config, 
+    sqlite_db, 
+    llm_catalog, 
+    Qdrant_URL,
 )
+from utils.knowledge_base import create_knowledge_base
+
+# Set NO_PROXY to avoid proxy for localhost connections
+os.environ["NO_PROXY"] = "localhost, 127.0.0.1"
+os.environ["no_proxy"] = "localhost, 127.0.0.1"
 
 # Create knowledge base
-knowledge_base = Knowledge(
-    vector_db=vector_db,
-    contents_db=contents_db,
-)
+knowledge_base = create_knowledge_base(COLLECTION_NAME="thai_recipe_knowledge")
 
 agent = Agent(
-    model=get_llm_config('OpenAI'),
+    model=get_llm_config('OpenAI-mini',llm_catalog.get("OpenAI-mini", "gpt-4.1-mini")),
     knowledge=knowledge_base
     )
 
 if __name__ == "__main__":
+
     # Load knowledge base asynchronously
     asyncio.run(knowledge_base.add_content_async(
-            url="https://www.nba.com/stats/help/glossary",
-            reader=WebsiteReader(max_depth=2, max_links=20),
+            url="https://agno-public.s3.amazonaws.com/recipes/ThaiRecipes.pdf",
             skip_if_exists=True
         )
     )

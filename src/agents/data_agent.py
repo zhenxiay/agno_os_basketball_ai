@@ -2,6 +2,8 @@
 This module defines an agent configured to interact with a MS SQL Server instance via MCPTools.
 '''
 from textwrap import dedent
+from typing import Any, Dict, List, Optional, Sequence, Tuple, Union, cast
+
 from agno.tools import tool
 from agno.agent import Agent
 from agno.tools.reasoning import ReasoningTools
@@ -20,13 +22,17 @@ from utils.logger import get_logger
 from utils.config import (
     get_llm_config,
     sqlite_db,
+    llm_catalog,
     )
 
 # Initialize logger
 logger = get_logger()
 
-@tool(stop_after_tool_call=True)
-def get_team_shooting_clustering(season: str, n_cluster: int):
+@tool(stop_after_tool_call=False)
+def get_team_shooting_clustering(
+        season: str, 
+        n_cluster: Optional[int]= 5
+        ):
     """Get the team shooting clustering data for a given season."""
     
     df_shooting = CreateSeason(season).read_team_shooting()
@@ -35,8 +41,11 @@ def get_team_shooting_clustering(season: str, n_cluster: int):
 
     return df_output
 
-@tool(stop_after_tool_call=True)
-def get_player_clustering(season: str, n_cluster: int):
+@tool(stop_after_tool_call=False)                                 
+def get_player_clustering(
+        season: str, 
+        n_cluster: Optional[int]= 5
+        ):
     """Get the palyer clustering data for a given season."""
     
     df_adv_stats = CreateSeason(season).read_adv_stats()
@@ -45,20 +54,27 @@ def get_player_clustering(season: str, n_cluster: int):
 
     return df_output
 
-def create_agent(llm: str) -> Agent:
+def create_agent(llm: str, llm_reasoning: Optional[str]) -> Agent:
     '''
     This function creates an agent as basketball analyst.
 
     Args:
-        llm: The LLM model to use for the team ("claude", "OpenAI" or "AzureOpenAI")
+        llm: The LLM model to use for the team ("claude", "OpenAI-mini","OpenAI" or "AzureOpenAI")
+        llm_reasoning: The LLM model for reasoning ("claude", "OpenAI-mini", "OpenAI" or "AzureOpenAI")
         model_id: The model ID to use for the LLM. Options: "claude-sonnet-4-5", "gpt-4.1-mini", "gpt-4.1"
         knowledge_base: The knowledge base to be used by the agent
     '''
 
     agent = Agent(
         name="Basketball Data Agent",
-        model=get_llm_config(llm,"gpt-4.1"),
-        reasoning_model=get_llm_config(llm, "gpt-4.1-mini"),
+        model=get_llm_config(
+                    provider=llm,
+                    model_id=llm_catalog.get(llm)
+                    ),
+        reasoning_model=get_llm_config(
+                    provider=llm_reasoning,
+                    model_id=llm_catalog.get(llm_reasoning, llm)
+                    ),
         db=sqlite_db(),
         tools=[
             get_team_shooting_clustering,

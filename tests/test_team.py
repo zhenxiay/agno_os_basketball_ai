@@ -14,6 +14,7 @@ from agents.data_agent import create_agent as create_data_agent
 from teams.data_analysis_team import create_team as create_data_analysis_team
 
 from utils.logger import get_logger
+from utils.knowledge_base import create_knowledge_base
 
 logger = get_logger()
 
@@ -30,8 +31,17 @@ def test_team():
     '''
     try:
         analysis_team = create_data_analysis_team(
-                member_list=[create_data_agent(llm="OpenAI"), 
-                             create_analyst_agent(llm="OpenAI")], 
+                member_list=[
+                    create_data_agent(
+                            llm="OpenAI", 
+                            llm_reasoning="OpenAi-mini",
+                            ),
+                    create_analyst_agent(
+                            llm="OpenAI", 
+                            #llm_reasoning="OpenAi-mini",
+                            knowledge_base=create_knowledge_base(),
+                            ),
+                            ], 
                 llm="OpenAI"
                 )
         logger.info(analysis_team.name)
