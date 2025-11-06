@@ -52,7 +52,8 @@ def get_agent():
                 'OpenAI-mini',
                 llm_catalog.get("OpenAI-mini", "gpt-4.1-mini")
                 ),
-                knowledge=knowledge_base
+                knowledge=knowledge_base,
+                search_knowledge=True,
                 )
 
 if __name__ == "__main__":
@@ -60,8 +61,15 @@ if __name__ == "__main__":
     # Load knowledge base asynchronously
     asyncio.run(knowledge_base.add_content_async(
             url="https://www.nba.com/stats/help/glossary",
+            reader=WebsiteReader(max_depth=2, max_links=10),
             skip_if_exists=True
         )
     )
 
-    asyncio.run(get_agent().aprint_response("What does the advanced stats TS% mean?", markdown=True))
+    asyncio.run(get_agent().aprint_response(
+        "What does the advanced stats DBPM mean?", 
+        stream=True, 
+        stream_events=True,
+        markdown=True
+            )
+        )
