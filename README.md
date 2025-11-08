@@ -6,6 +6,10 @@ An intelligent basketball analytics agent built on AgentOS that provides insight
 
 This project combines artificial intelligence with basketball analytics to create an interactive agent that can analyze games, predict outcomes, and provide detailed insights about players and teams. Built on the AgentOS framework, it leverages machine learning models and a comprehensive knowledge base to deliver accurate and actionable basketball intelligence.
 
+## Demo
+
+![alt text](visuals/basketball_agno_os_demo.mp4)
+
 ## Features
 
 - **🏀 Game Analysis**: Real-time analysis of basketball games and player statistics
