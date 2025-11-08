@@ -8,7 +8,7 @@ This project combines artificial intelligence with basketball analytics to creat
 
 ## Demo
 
-![alt text](visuals/basketball_agno_os_demo.mp4)
+![alt text](visuals/basketball_agno_os_demo.gif)
 
 ## Features
 
