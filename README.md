@@ -12,12 +12,11 @@ This project combines artificial intelligence with basketball analytics to creat
 
 ## Features
 
-- **🏀 Game Analysis**: Real-time analysis of basketball games and player statistics
-- **📊 Performance Predictions**: ML-powered predictions for player and team performance  
-- **💬 Interactive Agent**: Natural language interface for basketball insights and recommendations
-- **📈 Data Visualization**: Rich visual representations of basketball data and analytics
-- **🔬 MLflow Integration**: Experiment tracking and model management
-- **💾 Knowledge Base**: Comprehensive basketball data storage and retrieval
+- **🏀 Team & Player statistic insights**: Look behind the scene and offer insights in teams and player statistics  
+- **💬 Interactive Agent**: Natural language interface for the analysis
+- **📈 Data Visualization**: Contains AI agent which creates visual representations for data analytics
+- **🔬 MLflow Integration**: Integrates MlFlow to trace Agent workflow
+- **💾 Knowledge Base**: RAG integrated for the Agentd with a vectorized knowledge base (Qdant)
 
 ## Prerequisites
 
@@ -55,15 +54,22 @@ This project combines artificial intelligence with basketball analytics to creat
 
 ## Usage
 
-### Interacting with the Agent
+### Interacting with the AI Analytics Team
 
-The basketball AI agent understands natural language queries about:
+This Agent OS offers a framework of multiple AI agents for your basketball related analytics requests.
 
-- **Player Statistics**: "What are LeBron James' shooting percentages this season?"
-- **Game Predictions**: "Predict the outcome of Lakers vs Warriors tonight"
-- **Team Analysis**: "Show me the Celtics' defensive performance trends"
+A team coordinator is configured with reasoning tools and acts as the initial entrypoint of user's request.
+It analyzes the request, plan subtasks and distributes them to the agents.
+
+Each agent has its own capabilities (toolkit, instructions, memory etc.).
+It peroforms its task based on the requests of the team coordinator.
+
+This AI analztics team understands natural language queries about:
+
+- **Player Statistics**: "How does Stephen Curry impact the game in season 2025? Gather his advanced statistics to analyze!"
+- **Team Analysis**: "Give me a clustering analysis based on the NBA team's shooting behavor in season 2024!" 
 - **Historical Data**: "Who were the top scorers in the 2023 playoffs?"
-- **Strategy Insights**: "What's the best defensive strategy against the Warriors?"
+- **Strategy Insights**: "What's the best defensive strategy against the Warriors this season?"
 
 ## Project Structure
 
@@ -72,6 +78,7 @@ agno_os_basketball_ai/
 ├── src/                    # Source code
 │   ├── main.py            # Main application entry point
 │   ├── agents/            # AI agent implementations
+|   ├── teams/.            # AI team (multi agents team) implementations
 │   ├── models/            # ML models and data structures
 │   ├── analytics/         # Basketball analytics modules
 │   └── utils/             # Utility functions
@@ -91,164 +98,26 @@ agno_os_basketball_ai/
 Copy `template.env` to `.env` and configure:
 
 ```env
-# API Keys
-NBA_API_KEY=your_nba_api_key
-SPORTS_API_KEY=your_sports_api_key
 
-# Database Configuration
-DATABASE_URL=sqlite:///agno.db
-KNOWLEDGE_BASE_URL=sqlite:///knowledge_base.db
+# LLM API Keys
+OPENAI_API_KEY=your-api-key
 
-# Model Configuration
-MODEL_PATH=models/
-EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
-
-# Agent Settings
-MAX_CONTEXT_LENGTH=4000
-TEMPERATURE=0.7
 ```
 
 ### Agent Capabilities
 
 The agent is configured with specialized capabilities for:
 - Statistical analysis and trend identification
-- Game prediction using historical data
-- Player performance evaluation
-- Team strategy recommendations
-- Real-time game commentary and insights
-
-## Development
-
-### Setting up Development Environment
-
-```bash
-# Install development dependencies
-uv sync --dev
-
-# Install pre-commit hooks
-pre-commit install
-
-# Run tests
-uv run pytest
-
-# Run linting
-uv run flake8 src/
-uv run black src/
-
-# Type checking
-uv run mypy src/
-```
-
-### MLflow Experiments
-
-Monitor model performance and experiments:
-
-```bash
-# Start MLflow UI
-mlflow ui
-
-# View experiments at http://localhost:5000
-```
-
-### Testing
-
-```bash
-# Run all tests
-uv run pytest
-
-# Run with coverage
-uv run pytest --cov=src
-
-# Run specific test categories
-uv run pytest tests/unit/
-uv run pytest tests/integration/
-```
+- Player & Team performance evaluation
+- Data Visualization 
 
 ## Architecture
 
 ### Core Components
 
 - **AgentOS Framework**: Provides the foundation for intelligent agent behavior
-- **Basketball Analytics Engine**: Processes game data and generates insights
-- **ML Pipeline**: Handles model training, evaluation, and predictions
-- **Knowledge Base**: Stores and retrieves basketball-related information
-- **Visualization Engine**: Creates charts and visual representations of data
-
-### Data Flow
-
-1. **Data Ingestion**: Basketball data from various APIs and sources
-2. **Processing**: Clean, normalize, and enrich the data
-3. **Storage**: Store in knowledge base with efficient indexing
-4. **Analysis**: Apply ML models and statistical analysis
-5. **Response Generation**: Create natural language responses with visualizations
-
-## Performance
-
-> [!NOTE]
-> The agent is optimized for basketball analytics workloads with:
-> - Sub-second response times for statistical queries
-> - Real-time game analysis capabilities
-> - Efficient data retrieval from the knowledge base
-> - Scalable ML model inference
-
-## Troubleshooting
-
-### Common Issues
-
-**Database Connection Errors**:
-```bash
-# Verify database files exist
-ls -la *.db
-
-# Reset databases if corrupted
-rm agno.db knowledge_base.db
-python src/main.py --init-db
-```
-
-**API Rate Limits**:
-- Check your API key quotas
-- Implement request throttling in configuration
-- Consider caching frequently accessed data
-
-**Memory Issues**:
-- Reduce `MAX_CONTEXT_LENGTH` in configuration
-- Use smaller embedding models for lower memory usage
-- Enable model quantization for inference
-
-## Contributing
-
-We welcome contributions! Please see our contribution guidelines:
-
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-basketball-feature`)
-3. **Commit** your changes (`git commit -m 'Add amazing basketball feature'`)
-4. **Push** to the branch (`git push origin feature/amazing-basketball-feature`)
-5. **Open** a Pull Request
-
-### Development Guidelines
-
-- Follow PEP 8 style guidelines
-- Add tests for new features
-- Update documentation for API changes
-- Use type hints throughout the codebase
-- Ensure all tests pass before submitting PRs
-
-## Roadmap
-
-- [ ] **Advanced Player Tracking**: Integration with player tracking data
-- [ ] **Live Game Integration**: Real-time game analysis during broadcasts  
-- [ ] **Fantasy Basketball**: Tools for fantasy league analysis
-- [ ] **Social Features**: Share insights and predictions with other users
-- [ ] **Mobile App**: Native mobile application for on-the-go analysis
-
-## Support
-
-Need help? Here are your options:
-
-- **Issues**: Report bugs or request features via GitHub Issues
-- **Discussions**: Join community discussions for general questions
-- **Documentation**: Check the `/docs` folder for detailed guides
-- **Examples**: See `/examples` for usage patterns and tutorials
+- **Basketball Analytics Toolkit**: Foundamental toolkit for the AI agents to get relevant data for the analysis
+- **Knowledge Base**: Stores relevant information for the analysis (NBA official statistic glossary) in a vectorized knowledge base and is availiable for agentic search like RAG.
 
 ---
 
