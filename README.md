@@ -1,4 +1,4 @@
-# Basketball AI Agent
+# Basketball AI Analytics App
 
 An AI-driven **Basketball Analytics App** built on Agno framework that provides insights, predictions, and analysis for basketball games and player performance.
 
