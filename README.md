@@ -6,7 +6,7 @@ An AI-driven **Basketball Analytics App** built on [Agno framework](https://docs
 
 This project combines artificial intelligence with basketball analytics to create an **interactive Agentic AI App** that can analyze games, predict outcomes, and provide detailed insights about players and teams. 
 
-Built on the **Agno framework**, it leverages the power of Large Language Model and specific toolkit for basketball statistic to deliver insightful and actionable basketball intelligence.
+Built on the [Agno framework](https://docs.agno.com/), it leverages the power of Large Language Model and specific toolkit for basketball statistic to deliver insightful and actionable basketball intelligence.
 
 ## Demo
 
