@@ -6,7 +6,7 @@ An AI-driven **Basketball Analytics App** built on [Agno framework](https://docs
 
 This project combines artificial intelligence with basketball analytics to create an **interactive Agentic AI App** that can analyze games, predict outcomes, and provide detailed insights about players and teams. 
 
-Built on the [Agno framework](https://docs.agno.com/), it leverages the power of Large Language Model and specific toolkit for basketball statistic to deliver insightful and actionable basketball intelligence.
+Built on the [Agno framework](https://docs.agno.com/), it leverages the power of Large Language Model and open source project for [Basketball Intelligence] https://github.com/zhenxiay/BasketIntelligence to deliver insightful and actionable basketball intelligence.
 
 ## Demo
 
@@ -15,7 +15,7 @@ Built on the [Agno framework](https://docs.agno.com/), it leverages the power of
 ## Features
 
 - **🏀 Team & Player statistic insights**: Look behind the scene and offer insights in teams and player statistics  
-- **💬 Interactive Agent**: Natural language interface for the analysis
+- **💬 Interactive Multi Agent Team**: Natural language interface for the analysis
 - **📈 Data Visualization**: Contains AI agent which creates visual representations for data analytics
 - **🔬 MLflow Integration**: Integrates MlFlow to trace Agent workflow
 - **💾 Knowledge Base**: RAG integrated for the Agentd with a vectorized knowledge base (Qdant)
@@ -25,6 +25,7 @@ Built on the [Agno framework](https://docs.agno.com/), it leverages the power of
 - Python 3.11+
 - UV package manager (recommended) or pip
 - SQLite (included for local data storage)
+- Qdrant (included for vectorized knowledge base)
 
 ## Quick Start
 
