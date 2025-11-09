@@ -4,7 +4,9 @@ An AI-driven **Basketball Analytics App** built on AgentOS that provides insight
 
 ## Overview
 
-This project combines artificial intelligence with basketball analytics to create an **interactive Agentic AI App** that can analyze games, predict outcomes, and provide detailed insights about players and teams. Built on the AgentOS framework, it leverages machine learning models and a comprehensive knowledge base to deliver accurate and actionable basketball intelligence.
+This project combines artificial intelligence with basketball analytics to create an **interactive Agentic AI App** that can analyze games, predict outcomes, and provide detailed insights about players and teams. 
+
+Built on the **Agno framework**, it leverages the power of Large Language Model and specific toolkit for basketball statistic to deliver insightful and actionable basketball intelligence.
 
 ## Demo
 
