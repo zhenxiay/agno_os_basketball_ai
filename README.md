@@ -82,14 +82,9 @@ agno_os_basketball_ai/
 │   ├── main.py            # Main application entry point
 │   ├── agents/            # AI agent implementations
 |   ├── teams/.            # AI team (multi agents team) implementations
-│   ├── models/            # ML models and data structures
-│   ├── analytics/         # Basketball analytics modules
 │   └── utils/             # Utility functions
 ├── tests/                 # Test suite
-├── mlruns/                # MLflow experiment tracking
 ├── visuals/               # Generated charts and visualizations
-├── agno.db               # AgentOS configuration and state
-├── knowledge_base.db     # Basketball knowledge base
 ├── template.env          # Environment template
 └── pyproject.toml        # Project configuration
 ```
