@@ -2,6 +2,7 @@
 This module defines an agent configured to interact with a MS SQL Server instance via MCPTools.
 '''
 from textwrap import dedent
+import pandas-toon
 from typing import Any, Dict, List, Optional, Sequence, Tuple, Union, cast
 
 from agno.tools import tool
@@ -61,6 +62,32 @@ def get_player_clustering(
     df_output = df_adv_stats.merge(df_clustering, on='Player', how='inner')
 
     return df_output
+
+@tool(
+    name="get_play_by_play_game_report",
+    description='''
+    Get the play by play report for a given game.
+    Args:
+        date: The date of the game in YYYYMMDD format.
+        home_team: The home team abbreviation.
+    ''',
+    stop_after_tool_call=False
+    )     
+def get_game_report(
+    date: str, 
+    home_team: str) -> str:
+    '''
+    Get the play by play report for a given game.
+    More Details please refer to the tool description.
+    '''
+    
+    url=f"https://www.basketball-reference.com/boxscores/pbp/{date}0{home_team}.html"
+
+    cols = [2,4]
+
+    df = pd.read_html(url)[0].droplevel(0, axis=1)
+
+    return df.to_toon()
 
 def create_agent(llm: str, llm_reasoning: Optional[str]) -> Agent:
     '''
