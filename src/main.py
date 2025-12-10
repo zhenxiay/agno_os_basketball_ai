@@ -2,6 +2,7 @@
 Main entry point to start the agent app.
 '''
 import asyncio
+import mlflow
 from agno.team import Team
 from agno.os import AgentOS
 from agno.knowledge.reader.website_reader import WebsiteReader
@@ -10,7 +11,9 @@ import os
 from agents.data_agent import create_agent as create_data_agent
 from agents.analyst_agent import create_agent as create_analyst_agent
 from agents.visual_agent import create_agent as create_visual_agent
+from agents.game_report_agent import create_agent as create_game_report_agent
 from teams.data_analysis_team import create_team as create_data_analysis_team
+from workflow.generate_game_report import game_report_workflow
 
 from utils.knowledge_base import create_knowledge_base
 from utils.mlflow_tracer import setup_mlflow_tracer
@@ -34,32 +37,32 @@ os.environ["no_proxy"] = "localhost, 127.0.0.1"
 # crate knowledge base
 knowledge_base = create_knowledge_base(COLLECTION_NAME="basketball_knowledge")
 
-# Set up mlflow tracer
-if MLFLOW_TRACING == 'true':
-    setup_mlflow_tracer(
-        track_server=MLFLOW_TRACK_SERVER,
-        experiment_name=MLFLOW_EXPERIMENT_NAME
-                        )
-    if MLFLOW_TRACK_SERVER == "databricks":
-        logger.info(f"Initialized mlflow trace to Databricks: {DATABRICKS_HOST}")
-    else:
-        logger.info("Initialized mlflow trace to http://localhost:5000")
-
 # Create agents
 data_agent = create_data_agent(
     llm, 
     llm_reasoning,
     )
+
 analyst_agent = create_analyst_agent(
     llm,
     llm_reasoning, 
     knowledge_base,
     )
+
+game_report_agent = create_game_report_agent(
+    llm, 
+    llm_reasoning,
+    )
+
 visual_agent = create_visual_agent(
     llm, 
     llm_reasoning,
     )
-member_list = [data_agent, analyst_agent, visual_agent]
+
+member_list = [data_agent, 
+               analyst_agent, 
+               game_report_agent,
+               visual_agent]
 
 # Create a team
 analysis_team = create_data_analysis_team(
@@ -69,15 +72,31 @@ analysis_team = create_data_analysis_team(
     knowledge_base,
     )
 
+# Create a workflow
+game_report_workflow = game_report_workflow()
+
 # Create the AgentOS
-agent_os = AgentOS(                    
+agent_os = AgentOS(         
+    agents=[game_report_agent],           
     teams=[analysis_team],
+    workflows=[game_report_workflow],
     enable_mcp_server=True,
                     )
 # Get the FastAPI app for the AgentOS
 app = agent_os.get_app()
 
 if __name__ == "__main__":
+
+    # Set up mlflow tracer
+    if MLFLOW_TRACING == 'true':
+        setup_mlflow_tracer(
+            track_server=MLFLOW_TRACK_SERVER,
+            experiment_name=MLFLOW_EXPERIMENT_NAME
+                        )
+        if MLFLOW_TRACK_SERVER == "databricks":
+            logger.info(f"Initialized mlflow trace to Databricks: {DATABRICKS_HOST}")
+        else:
+            logger.info("Initialized mlflow trace to http://localhost:5000")
 
     # Load knowledge base asynchronously
     asyncio.run(knowledge_base.add_content_async(

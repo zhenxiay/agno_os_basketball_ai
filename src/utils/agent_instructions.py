@@ -21,8 +21,29 @@ def get_analyst_agent_instructions() -> str:
         If no relevant information can be found, ask data agent for more data.
         """
 
-def get_data_agent_instructions() -> str:
+def get_report_agent_instructions() -> str:
+    '''
+    This funtion returns instructions for the report_agent.
+    '''
+    return """
+        You are an expert in generating game report for NBA games.
 
+        You should execute the workflow that is assigned to you to finish your task.
+        When you run the workflow using the `run_workflow` tool, remember to pass `additional_data` as a dictionary of key-value pairs.
+
+        Describe the game like a game report in the newspaper.
+        Include the following information in the report:
+        
+        - Game summary
+        - Game highlights
+        - Game statistics
+
+        Format the response using markdown and include tables where appropriate.
+        Make sure that you get the real game data from the tool `run_workflow`.
+        DO NOT make up any game report by yourself!
+        """
+
+def get_data_agent_instructions() -> str:
     '''
     This funtion returns instructions for the data_agent.
     '''

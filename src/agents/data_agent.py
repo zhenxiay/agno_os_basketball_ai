@@ -2,8 +2,10 @@
 This module defines an agent configured to interact with a MS SQL Server instance via MCPTools.
 '''
 from textwrap import dedent
-import pandas-toon
+import pandas_toon
 from typing import Any, Dict, List, Optional, Sequence, Tuple, Union, cast
+
+import pandas as pd
 
 from agno.tools import tool
 from agno.agent import Agent
@@ -38,11 +40,16 @@ def get_team_shooting_clustering(
         season: str, 
         n_cluster: Optional[int]= 5
         ):
-    """Get the team shooting clustering data for a given season."""
-    
-    df_shooting = CreateSeason(season).read_team_shooting()
-    df_clustering = k_means_team_shooting_clustering(season, n_cluster)
-    df_output = df_shooting.join(df_clustering.set_index('Team'), on='Team')
+    """
+    Get the team shooting clustering data for a given season.
+    """
+    try:
+       df_shooting = CreateSeason(season).read_team_shooting()
+       df_clustering = k_means_team_shooting_clustering(season, n_cluster)
+       df_output = df_shooting.join(df_clustering.set_index('Team'), on='Team')
+
+    except Exception as e:
+         logger.error(f"Error in get_team_shooting_clustering: {e}")
 
     return df_output
 
@@ -55,11 +62,16 @@ def get_player_clustering(
         season: str, 
         n_cluster: Optional[int]= 5
         ):
-    """Get the player clustering data with advanced stats for a given season."""
-    
-    df_adv_stats = CreateSeason(season).read_adv_stats()
-    df_clustering = k_means_player_clustering(season, n_cluster)
-    df_output = df_adv_stats.merge(df_clustering, on='Player', how='inner')
+    """
+    Get the player clustering data with advanced stats for a given season.
+    """
+    try:
+        df_adv_stats = CreateSeason(season).read_adv_stats()
+        df_clustering = k_means_player_clustering(season, n_cluster)
+        df_output = df_adv_stats.merge(df_clustering, on='Player', how='inner')
+
+    except Exception as e:
+        logger.error(f"Error in get_player_clustering: {e}")
 
     return df_output
 
@@ -80,13 +92,13 @@ def get_game_report(
     Get the play by play report for a given game.
     More Details please refer to the tool description.
     '''
+    try:
+        url=f"https://www.basketball-reference.com/boxscores/pbp/{date}0{home_team}.html"
+        df = pd.read_html(url)[0].droplevel(0, axis=1)
+
+    except Exception as e:
+        logger.error(f"Error fetching game stats: {e}")
     
-    url=f"https://www.basketball-reference.com/boxscores/pbp/{date}0{home_team}.html"
-
-    cols = [2,4]
-
-    df = pd.read_html(url)[0].droplevel(0, axis=1)
-
     return df.to_toon()
 
 def create_agent(llm: str, llm_reasoning: Optional[str]) -> Agent:
@@ -114,6 +126,7 @@ def create_agent(llm: str, llm_reasoning: Optional[str]) -> Agent:
         tools=[
             get_team_shooting_clustering,
             get_player_clustering,
+            get_game_report,
             ReasoningTools(add_instructions=True),
             ],
         instructions=get_data_agent_instructions(),
