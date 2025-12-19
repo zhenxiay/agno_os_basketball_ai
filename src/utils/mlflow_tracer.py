@@ -24,4 +24,12 @@ def setup_mlflow_tracer(track_server: str, experiment_name: str) -> None:
 
     mlflow.agno.autolog()
 
+    # MLflow < 2.0
+    print("MLflow version:", mlflow.__version__)
+    print("Tracking URI:", mlflow.get_tracking_uri())
+    print("Artifact URI:", mlflow.get_artifact_uri())
+
+    # MLflow >= 2.0
+    mlflow.doctor()
+
     logger.info("MLflow tracer for Agno OS setup complete.")
