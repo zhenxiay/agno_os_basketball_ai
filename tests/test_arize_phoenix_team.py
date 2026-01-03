@@ -8,7 +8,7 @@ from agno.tools.python import PythonTools
 from agno.tools.local_file_system import LocalFileSystemTools
 
 from openinference.instrumentation.agno import AgnoInstrumentor
-from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
+#from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
 from opentelemetry.sdk import trace as trace_sdk
 from opentelemetry import trace as trace_api
 from opentelemetry.sdk.trace.export import ConsoleSpanExporter, SimpleSpanProcessor
@@ -16,9 +16,9 @@ from opentelemetry.sdk.trace.export import ConsoleSpanExporter, SimpleSpanProces
 from dotenv import load_dotenv
 load_dotenv()
 
-endpoint = "http://127.0.0.1:6006/v1/traces"
+#endpoint = "http://127.0.0.1:6006/v1/traces"
 tracer_provider = trace_sdk.TracerProvider()
-tracer_provider.add_span_processor(SimpleSpanProcessor(OTLPSpanExporter(endpoint)))
+#tracer_provider.add_span_processor(SimpleSpanProcessor(OTLPSpanExporter(endpoint)))
 # Optionally, you can also print the spans to the console.
 tracer_provider.add_span_processor(SimpleSpanProcessor(ConsoleSpanExporter()))
 
@@ -59,6 +59,6 @@ if __name__ == "__main__":
 
     asyncio.run(team.aprint_response(
         "Write a python script which prints Hello World and save it to a local folder.",
-        #stream=True
+        stream=True
         )
     )

@@ -10,13 +10,13 @@ resolution-markers = [
 
 [[package]]
 name = "agno"
-version = "2.2.6"
+version = "2.3.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "docstring-parser" },
     { name = "gitpython" },
     { name = "h11" },
-    { name = "httpx" },
+    { name = "httpx", extra = ["http2"] },
     { name = "packaging" },
     { name = "pydantic" },
     { name = "pydantic-settings" },
@@ -27,9 +27,9 @@ dependencies = [
     { name = "typer" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/58/5a/c435619022167a9d5170cd117d81bb0b4636587736e32ae84e205d28079a/agno-2.2.6.tar.gz", hash = "sha256:4ff00c89efe3a53c5ab49d0e0c3b668710907802550902f283a098e89cac8cb8", size = 1065359, upload-time = "2025-11-01T01:15:25.738Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c7/ba/6d91d7319482cd369f14a7c567d669c1e8ec073374f4ccba30b0440bc0ef/agno-2.3.5.tar.gz", hash = "sha256:87a7af2ad0ae9956f47e5b95e4ac9df134dcea932b40cbd1c30ba200ba2227d9", size = 1201530, upload-time = "2025-12-03T14:29:28.343Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/de/eb/af138752070b28d1accf3a6e148942cf5a668631664a8f92d876d02efbb3/agno-2.2.6-py3-none-any.whl", hash = "sha256:e69bb5c6bb33bb14208b090f4791bdb9a6e40c7dab7bbe5af86355cc14f0a0aa", size = 1314411, upload-time = "2025-11-01T01:15:23.369Z" },
+    { url = "https://files.pythonhosted.org/packages/a3/1e/efa123fae8d8bb971b0617d735c048f7321c7c9a5ce7306c788e75778f9a/agno-2.3.5-py3-none-any.whl", hash = "sha256:dd0229af54b6e82d657f91119a946d0d864e74823418558928865a62e37406c8", size = 1461224, upload-time = "2025-12-03T14:29:25.938Z" },
 ]
 
 [[package]]
@@ -58,7 +58,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "agno", specifier = ">=2.1.4" },
+    { name = "agno", specifier = "==2.3.5" },
     { name = "anthropic", specifier = ">=0.69.0" },
     { name = "basketintelligence", url = "https://github.com/zhenxiay/BasketIntelligence/releases/download/v1.0.2/BasketIntelligence-1.0.2-py3-none-any.whl" },
     { name = "bson", specifier = ">=0.5.10" },
