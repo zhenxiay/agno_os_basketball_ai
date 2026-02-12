@@ -6,11 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
-# github vscode extensions
-.github/
-
 # mlflow
 mlruns/
+mlartifacts/
 
 # Distribution / packaging
 .Python

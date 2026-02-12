@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 2
 requires-python = ">=3.11"
 resolution-markers = [
     "python_full_version >= '3.14'",
@@ -10,7 +10,7 @@ resolution-markers = [
 
 [[package]]
 name = "agno"
-version = "2.3.5"
+version = "2.4.8"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "docstring-parser" },
@@ -27,9 +27,9 @@ dependencies = [
     { name = "typer" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c7/ba/6d91d7319482cd369f14a7c567d669c1e8ec073374f4ccba30b0440bc0ef/agno-2.3.5.tar.gz", hash = "sha256:87a7af2ad0ae9956f47e5b95e4ac9df134dcea932b40cbd1c30ba200ba2227d9", size = 1201530, upload-time = "2025-12-03T14:29:28.343Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c6/f6/6123acb1a62976a26b55e09b2bd033efa5c75d0f711ce508bf5c82376cdf/agno-2.4.8.tar.gz", hash = "sha256:ed46a29fa1ad6a5e6d22305843bf9e3eed3f0ac902d7b313ae2bd2ec0e8bcda5", size = 1543282, upload-time = "2026-02-03T13:30:18.228Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/a3/1e/efa123fae8d8bb971b0617d735c048f7321c7c9a5ce7306c788e75778f9a/agno-2.3.5-py3-none-any.whl", hash = "sha256:dd0229af54b6e82d657f91119a946d0d864e74823418558928865a62e37406c8", size = 1461224, upload-time = "2025-12-03T14:29:25.938Z" },
+    { url = "https://files.pythonhosted.org/packages/11/f5/38d3c8143b8f431f314f3ee316a547ee0bd9f62567bf54926f6b9d182d32/agno-2.4.8-py3-none-any.whl", hash = "sha256:a72bc48c2d6f0a24623fd59fbf292d7da676b5f7e66d3f0d182757ee26a6789b", size = 1855145, upload-time = "2026-02-03T13:30:15.574Z" },
 ]
 
 [[package]]
@@ -54,12 +54,13 @@ dependencies = [
     { name = "pypdf" },
     { name = "qdrant-client" },
     { name = "tabulate" },
+    { name = "typer" },
 ]
 
 [package.metadata]
 requires-dist = [
-    { name = "agno", specifier = "==2.3.5" },
-    { name = "anthropic", specifier = ">=0.69.0" },
+    { name = "agno", specifier = "==2.4.8" },
+    { name = "anthropic", specifier = ">=0.79.0" },
     { name = "basketintelligence", url = "https://github.com/zhenxiay/BasketIntelligence/releases/download/v1.0.2/BasketIntelligence-1.0.2-py3-none-any.whl" },
     { name = "bson", specifier = ">=0.5.10" },
     { name = "chonkie", extras = ["openai"], specifier = ">=1.4.0" },
@@ -75,6 +76,7 @@ requires-dist = [
     { name = "pypdf", specifier = ">=6.1.3" },
     { name = "qdrant-client", specifier = ">=1.15.1" },
     { name = "tabulate", specifier = ">=0.9.0" },
+    { name = "typer", specifier = ">=0.20.0" },
 ]
 
 [[package]]
@@ -111,7 +113,7 @@ wheels = [
 
 [[package]]
 name = "anthropic"
-version = "0.72.0"
+version = "0.79.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyio" },
@@ -123,9 +125,9 @@ dependencies = [
     { name = "sniffio" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/49/07/61f3ca8e69c5dcdaec31b36b79a53ea21c5b4ca5e93c7df58c71f43bf8d8/anthropic-0.72.0.tar.gz", hash = "sha256:8971fe76dcffc644f74ac3883069beb1527641115ae0d6eb8fa21c1ce4082f7a", size = 493721, upload-time = "2025-10-28T19:13:01.755Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/15/b1/91aea3f8fd180d01d133d931a167a78a3737b3fd39ccef2ae8d6619c24fd/anthropic-0.79.0.tar.gz", hash = "sha256:8707aafb3b1176ed6c13e2b1c9fb3efddce90d17aee5d8b83a86c70dcdcca871", size = 509825, upload-time = "2026-02-07T18:06:18.388Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/7b/b7/160d4fb30080395b4143f1d1a4f6c646ba9105561108d2a434b606c03579/anthropic-0.72.0-py3-none-any.whl", hash = "sha256:0e9f5a7582f038cab8efbb4c959e49ef654a56bfc7ba2da51b5a7b8a84de2e4d", size = 357464, upload-time = "2025-10-28T19:13:00.215Z" },
+    { url = "https://files.pythonhosted.org/packages/95/b2/cc0b8e874a18d7da50b0fda8c99e4ac123f23bf47b471827c5f6f3e4a767/anthropic-0.79.0-py3-none-any.whl", hash = "sha256:04cbd473b6bbda4ca2e41dd670fe2f829a911530f01697d0a1e37321eb75f3cf", size = 405918, upload-time = "2026-02-07T18:06:20.246Z" },
 ]
 
 [[package]]
