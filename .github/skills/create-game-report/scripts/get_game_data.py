@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 '''
 This script can be executed by AI agent to perform the create game report task defined in the Agent Skill.
 '''
